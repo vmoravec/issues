@@ -1,4 +1,6 @@
 defmodule Issues.Github do
+  require Logger
+
   @user_agent [ {"User-agent", "elixir vmoravec@suse.com"} ]
   @user "vmoravec"
 
@@ -15,8 +17,8 @@ defmodule Issues.Github do
   end
 
   defp url project do
-    result = "https://api.github.com/repos/#{@user}/#{project}/issues"
-    IO.puts("Going to fetch from #{result}")
-    result
+    url = "https://api.github.com/repos/#{@user}/#{project}/issues"
+    Logger.info("Fetching from #{url}")
+    url
   end
 end

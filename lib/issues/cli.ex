@@ -1,4 +1,6 @@
 defmodule Issues.Cli do
+  require Logger
+
   @default_count 4
 
   def main argv do
@@ -13,10 +15,10 @@ defmodule Issues.Cli do
     )
 
     case parser_result do
-      {[help: true], _, _ }          -> :help
+      {[help: true], _, _ }    -> :help
       {_, [project, count], _} -> {project, String.to_integer(count)}
       {_,[project ], _}        -> {project, @default_count}
-      _                              -> :help
+      _                        -> :help
     end
   end
 
@@ -29,8 +31,8 @@ defmodule Issues.Cli do
 
   def process({project, _count}) do
     result = Issues.Github.fetch(project)
-    IO.puts("Returning result:")
-    IO.puts(inspect result)
+    Logger.info("Returning result in request body:")
+    Logger.info(inspect result)
 
     case result do
       { :ok, _ } -> System.halt(0)
